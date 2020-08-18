@@ -13,26 +13,32 @@ internal class HomePageAdapter(context: Context, fragmentManager: FragmentManage
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     private val context: WeakReference<Context> = WeakReference(context)
 
-    override fun getItem(position: Int): Fragment = if (position == SCREEN_HTTP_INDEX) {
+    override fun getItem(position: Int): Fragment = if (position == BLOCK) {
         //TransactionListFragment.newInstance()
         ThrowableListFragment.newInstance()
     } else {
         ThrowableListFragment.newInstance()
     }
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = 4
 
     override fun getPageTitle(position: Int): CharSequence? =
         context.get()?.getString(
-            if (position == SCREEN_HTTP_INDEX) {
+            if (position == BLOCK) {
                 R.string.chucker_tab_network
+            } else if (position == LEAK) {
+                R.string.chucker_tab_leak
+            }else if (position == CRASH) {
+                R.string.chucker_tab_crash
             } else {
                 R.string.chucker_tab_errors
             }
         )
 
     companion object {
-        const val SCREEN_HTTP_INDEX = 0
-        const val SCREEN_THROWABLE_INDEX = 1
+        const val CRASH = 0
+        const val BLOCK = 1
+        const val LEAK = 2
+        const val SCREEN_THROWABLE_INDEX = 3
     }
 }

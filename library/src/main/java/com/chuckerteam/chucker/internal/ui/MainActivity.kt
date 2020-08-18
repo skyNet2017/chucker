@@ -35,7 +35,7 @@ internal class MainActivity :
                 object : TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
-                        if (position == HomePageAdapter.SCREEN_HTTP_INDEX) {
+                        if (position == HomePageAdapter.BLOCK) {
                             Chucker.dismissTransactionsNotification(this@MainActivity)
                         } else {
                             Chucker.dismissErrorsNotification(this@MainActivity)
@@ -60,7 +60,7 @@ internal class MainActivity :
         // Get the screen to show, by default => HTTP
         val screenToShow = intent.getIntExtra(EXTRA_SCREEN, Chucker.SCREEN_HTTP)
         mainBinding.viewPager.currentItem = if (screenToShow == Chucker.SCREEN_HTTP) {
-            HomePageAdapter.SCREEN_HTTP_INDEX
+            HomePageAdapter.BLOCK
         } else {
             HomePageAdapter.SCREEN_THROWABLE_INDEX
         }

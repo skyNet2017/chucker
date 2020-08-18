@@ -34,8 +34,10 @@
     <string name="chucker_search">Search</string>
     <string name="chucker_body_unexpected_eof">\n\n--- Unexpected end of content ---</string>
     <string name="chucker_body_content_truncated">\n\n--- Content truncated ---</string>
-    <string name="chucker_tab_network">Network</string>
-    <string name="chucker_tab_errors">Errors</string>
+    <string name="chucker_tab_network">block</string>
+    <string name="chucker_tab_leak">leak</string>
+    <string name="chucker_tab_crash">crash</string>
+    <string name="chucker_tab_errors">error</string>
     <string name="chucker_network_tutorial">This tab displays network requests recorded with the ChuckerInterceptor. Add the interceptor to your OkHttp client to reap the benefits.</string>
     <string name="chucker_throwable_tutorial">This tab displays throwables recorded with the ChuckerCollector.onError method. Call this method when an error is thrown to check your stacktrace live.</string>
     <string name="chucker_network_notification_category">Chucker network requests</string>
