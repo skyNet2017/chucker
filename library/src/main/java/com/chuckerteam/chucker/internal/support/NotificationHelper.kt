@@ -11,7 +11,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.chuckerteam.chucker.R
 import com.chuckerteam.chucker.api.Chucker
-import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
 import com.chuckerteam.chucker.internal.data.entity.RecordedThrowable
 import com.chuckerteam.chucker.internal.ui.BaseChuckerActivity
 import java.util.HashSet
@@ -27,14 +26,10 @@ internal class NotificationHelper(val context: Context) {
 
         private const val BUFFER_SIZE = 10
         private const val INTENT_REQUEST_CODE = 11
-        private val transactionBuffer = LongSparseArray<HttpTransaction>()
         private val transactionIdsSet = HashSet<Long>()
 
         fun clearBuffer() {
-            synchronized(transactionBuffer) {
-                transactionBuffer.clear()
-                transactionIdsSet.clear()
-            }
+
         }
     }
 
@@ -75,57 +70,9 @@ internal class NotificationHelper(val context: Context) {
         }
     }
 
-    private fun addToBuffer(transaction: HttpTransaction) {
-        if (transaction.id == 0L) {
-            // Don't store Transactions with an invalid ID (0).
-            // Transaction with an Invalid ID will be shown twice in the notification
-            // with both the invalid and the valid ID and we want to avoid this.
-            return
-        }
-        synchronized(transactionBuffer) {
-            transactionIdsSet.add(transaction.id)
-            transactionBuffer.put(transaction.id, transaction)
-            if (transactionBuffer.size() > BUFFER_SIZE) {
-                transactionBuffer.removeAt(0)
-            }
-        }
-    }
 
-    fun show(transaction: HttpTransaction) {
-        addToBuffer(transaction)
-        if (!BaseChuckerActivity.isInForeground) {
-            val builder =
-                NotificationCompat.Builder(context, TRANSACTIONS_CHANNEL_ID)
-                    .setContentIntent(transactionsScreenIntent)
-                    .setLocalOnly(true)
-                    .setSmallIcon(R.drawable.chucker_ic_transaction_notification)
-                    .setColor(ContextCompat.getColor(context, R.color.chucker_color_primary))
-                    .setContentTitle(context.getString(R.string.chucker_http_notification_title))
-                    .setAutoCancel(true)
-                    .addAction(createClearAction(ClearDatabaseService.ClearAction.Transaction))
-            val inboxStyle = NotificationCompat.InboxStyle()
-            synchronized(transactionBuffer) {
-                var count = 0
-                (transactionBuffer.size() - 1 downTo 0).forEach { i ->
-                    val bufferedTransaction = transactionBuffer.valueAt(i)
-                    if ((bufferedTransaction != null) && count < BUFFER_SIZE) {
-                        if (count == 0) {
-                            builder.setContentText(bufferedTransaction.notificationText)
-                        }
-                        inboxStyle.addLine(bufferedTransaction.notificationText)
-                    }
-                    count++
-                }
-                builder.setStyle(inboxStyle)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    builder.setSubText(transactionIdsSet.size.toString())
-                } else {
-                    builder.setNumber(transactionIdsSet.size)
-                }
-            }
-            notificationManager.notify(TRANSACTION_NOTIFICATION_ID, builder.build())
-        }
-    }
+
+
 
     fun show(throwable: RecordedThrowable) {
         if (!BaseChuckerActivity.isInForeground) {

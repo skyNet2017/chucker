@@ -65,10 +65,7 @@ class RetentionManager @JvmOverloads constructor(
     }
 
     private fun deleteSince(threshold: Long) {
-        CoroutineScope(Dispatchers.IO).launch {
-            RepositoryProvider.transaction().deleteOldTransactions(threshold)
-            RepositoryProvider.throwable().deleteOldThrowables(threshold)
-        }
+
     }
 
     private fun isCleanupDue(now: Long) = now - getLastCleanup(now) > cleanupFrequency

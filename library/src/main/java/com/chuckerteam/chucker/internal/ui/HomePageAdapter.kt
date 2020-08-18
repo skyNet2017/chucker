@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.chuckerteam.chucker.R
 import com.chuckerteam.chucker.internal.ui.throwable.ThrowableListFragment
-import com.chuckerteam.chucker.internal.ui.transaction.TransactionListFragment
+
 import java.lang.ref.WeakReference
 
 internal class HomePageAdapter(context: Context, fragmentManager: FragmentManager) :
@@ -14,7 +14,8 @@ internal class HomePageAdapter(context: Context, fragmentManager: FragmentManage
     private val context: WeakReference<Context> = WeakReference(context)
 
     override fun getItem(position: Int): Fragment = if (position == SCREEN_HTTP_INDEX) {
-        TransactionListFragment.newInstance()
+        //TransactionListFragment.newInstance()
+        ThrowableListFragment.newInstance()
     } else {
         ThrowableListFragment.newInstance()
     }

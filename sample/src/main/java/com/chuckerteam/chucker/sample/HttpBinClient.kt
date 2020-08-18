@@ -3,7 +3,6 @@ package com.chuckerteam.chucker.sample
 import android.content.Context
 import com.chuckerteam.chucker.api.Chucker
 import com.chuckerteam.chucker.api.ChuckerCollector
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.chuckerteam.chucker.sample.HttpBinApi.Data
 import okhttp3.OkHttpClient
@@ -26,18 +25,12 @@ class HttpBinClient(
         retentionPeriod = RetentionManager.Period.ONE_HOUR
     )
 
-    private val chuckerInterceptor = ChuckerInterceptor(
-        context = context,
-        collector = collector,
-        maxContentLength = 250000L,
-        headersToRedact = emptySet<String>()
-    )
+
 
     private val httpClient =
         OkHttpClient.Builder()
             // Add a ChuckerInterceptor instance to your OkHttp client
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor(chuckerInterceptor)
             .build()
 
     private val api: HttpBinApi by lazy {

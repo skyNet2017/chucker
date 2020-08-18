@@ -14,9 +14,6 @@ internal class ClearDatabaseService : IntentService(CLEAN_DATABASE_SERVICE_NAME)
         when (intent?.getSerializableExtra(EXTRA_ITEM_TO_CLEAR)) {
             is ClearAction.Transaction -> {
                 RepositoryProvider.initialize(applicationContext)
-                CoroutineScope(Dispatchers.IO).launch {
-                    RepositoryProvider.transaction().deleteAllTransactions()
-                }
                 NotificationHelper.clearBuffer()
                 NotificationHelper(this).dismissTransactionsNotification()
             }

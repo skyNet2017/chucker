@@ -7,13 +7,11 @@ import com.chuckerteam.chucker.api.Chucker
 import com.chuckerteam.chucker.databinding.ChuckerActivityMainBinding
 import com.chuckerteam.chucker.internal.ui.throwable.ThrowableActivity
 import com.chuckerteam.chucker.internal.ui.throwable.ThrowableAdapter
-import com.chuckerteam.chucker.internal.ui.transaction.TransactionActivity
-import com.chuckerteam.chucker.internal.ui.transaction.TransactionAdapter
+
 import com.google.android.material.tabs.TabLayout
 
 internal class MainActivity :
     BaseChuckerActivity(),
-    TransactionAdapter.TransactionClickListListener,
     ThrowableAdapter.ThrowableClickListListener {
 
     private lateinit var viewModel: MainViewModel
@@ -72,9 +70,7 @@ internal class MainActivity :
         ThrowableActivity.start(this, throwableId)
     }
 
-    override fun onTransactionClick(transactionId: Long, position: Int) {
-        TransactionActivity.start(this, transactionId)
-    }
+
 
     companion object {
         const val EXTRA_SCREEN = "EXTRA_SCREEN"
