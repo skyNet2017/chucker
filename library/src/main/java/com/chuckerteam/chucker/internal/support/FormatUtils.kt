@@ -3,8 +3,7 @@ package com.chuckerteam.chucker.internal.support
 import android.content.Context
 import com.chuckerteam.chucker.R
 
-import com.google.gson.JsonParseException
-import com.google.gson.JsonParser
+
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.PrintWriter
@@ -45,14 +44,7 @@ internal object FormatUtils {
         return String.format(Locale.US, "%.1f %sB", bytes / unit.toDouble().pow(exp.toDouble()), pre)
     }
 
-    fun formatJson(json: String): String {
-        return try {
-            val je = JsonParser.parseString(json)
-            JsonConverter.instance.toJson(je)
-        } catch (e: JsonParseException) {
-            json
-        }
-    }
+
 
     fun formatXml(xml: String): String {
         return try {
