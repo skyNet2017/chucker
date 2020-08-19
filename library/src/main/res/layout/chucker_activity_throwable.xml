@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/chucker_doub_grid"
             android:textSize="12sp"
+            android:textColor="#333333"
             android:typeface="monospace"
             tools:text="java.lang.SecurityException: Package com.chuckerteam.chucker.sample is currently frozen!
         at com.android.server.pm.PackageManagerService.checkPackageStartable(PackageManagerService.java:3896)

@@ -40,37 +40,7 @@ object Chucker {
             .putExtra(MainActivity.EXTRA_SCREEN, screen)
     }
 
-   var top = WeakReference<Activity>(null)
 
-    @JvmStatic
-    fun init(app: Application){
-        app.registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{
-            override fun onActivityPaused(activity: Activity) {
-            }
-
-            override fun onActivityStarted(activity: Activity) {
-            }
-
-            override fun onActivityDestroyed(activity: Activity) {
-
-            }
-
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-            }
-
-            override fun onActivityStopped(activity: Activity) {
-            }
-
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                top = WeakReference(activity)
-            }
-
-            override fun onActivityResumed(activity: Activity) {
-                top = WeakReference(activity)
-            }
-
-        })
-    }
 
     /**
      * Configure the default crash handler of the JVM to report all uncaught [Throwable] to Chucker.

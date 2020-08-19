@@ -48,6 +48,7 @@ internal class ThrowableAdapter(
 
             tag.text = throwable.tag
             clazz.text = throwable.clazz
+            activity.text = throwable.top_activity
             message.text = throwable.message
             date.text = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM)
                 .format(throwable.date)

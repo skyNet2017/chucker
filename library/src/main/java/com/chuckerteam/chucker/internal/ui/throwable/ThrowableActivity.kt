@@ -84,6 +84,7 @@ internal class ThrowableActivity : BaseChuckerActivity() {
         errorBinding.apply {
             toolbarTitle.text = throwable.formattedDate
             throwableItem.tag.text = throwable.tag
+            throwableItem.activity.text = throwable.top_activity
             throwableItem.clazz.text = throwable.clazz
             throwableItem.message.text = throwable.message
             throwableStacktrace.text = throwable.content
