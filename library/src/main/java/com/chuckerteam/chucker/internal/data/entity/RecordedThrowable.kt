@@ -13,16 +13,18 @@ import com.chuckerteam.chucker.internal.support.FormatUtils
 internal data class RecordedThrowable(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")
     var id: Long? = 0,
-    @ColumnInfo(name = "tag") var tag: String?,
+    @ColumnInfo(name = "tag") var tag: String?,//类型名称
+    @ColumnInfo(name = "activity") var top_activity: String?,
     @ColumnInfo(name = "date") var date: Long?,
     @ColumnInfo(name = "clazz") var clazz: String?,
     @ColumnInfo(name = "message") var message: String?,
     @ColumnInfo(name = "content") var content: String?
 ) {
     @Ignore
-    constructor(tag: String, throwable: Throwable) : this(null, null, null, null, null, null) {
+    constructor(tag: String, throwable: Throwable) : this(null, null, null,null, null, null, null) {
         this.tag = tag
         this.date = System.currentTimeMillis()
+        this.top_activity = "";
         this.clazz = throwable.javaClass.name
         this.message = throwable.message
         this.content = FormatUtils.formatThrowable(throwable)

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.chuckerteam.chucker.internal.data.entity.RecordedThrowableTuple
+import com.chuckerteam.chucker.internal.data.entity.ThrowableType
 import com.chuckerteam.chucker.internal.data.repository.RepositoryProvider
 import com.chuckerteam.chucker.internal.support.NotificationHelper
 import kotlinx.coroutines.launch
@@ -15,25 +16,18 @@ internal class MainViewModel : ViewModel() {
 
     private val currentFilter = MutableLiveData<String>("")
 
-
-
-    val throwables: LiveData<List<RecordedThrowableTuple>> = RepositoryProvider.throwable()
-        .getSortedThrowablesTuples()
+    fun getLiveData(tag: String):LiveData<List<RecordedThrowableTuple>>{
+        return RepositoryProvider.throwable()
+                .getSortedThrowablesTuples(tag)
+    }
 
     fun updateItemsFilter(searchQuery: String) {
         currentFilter.value = searchQuery
     }
 
-    fun clearTransactions() {
+    fun clearThrowables(tag:String) {
         viewModelScope.launch {
-
-        }
-        NotificationHelper.clearBuffer()
-    }
-
-    fun clearThrowables() {
-        viewModelScope.launch {
-            RepositoryProvider.throwable().deleteAllThrowables()
+            RepositoryProvider.throwable().deleteAllThrowables(tag)
         }
     }
 }

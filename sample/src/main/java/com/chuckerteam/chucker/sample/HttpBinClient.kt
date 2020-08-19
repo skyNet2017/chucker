@@ -4,6 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.Chucker
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.RetentionManager
+import com.chuckerteam.chucker.internal.data.entity.ThrowableType
 import com.chuckerteam.chucker.sample.HttpBinApi.Data
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -89,7 +90,13 @@ class HttpBinClient(
     }
 
     internal fun recordException() {
-        collector.onError("Example button pressed", RuntimeException("User triggered the button"))
+        collector.onError(ThrowableType.TAG_normal, RuntimeException("User triggered the button"))
+        // You can also throw exception, it will be caught thanks to "Chucker.registerDefaultCrashHandler"
+        // throw new RuntimeException("User triggered the button");
+    }
+
+    internal fun recordException(tag:String,e:Throwable) {
+        collector.onError(tag,e)
         // You can also throw exception, it will be caught thanks to "Chucker.registerDefaultCrashHandler"
         // throw new RuntimeException("User triggered the button");
     }

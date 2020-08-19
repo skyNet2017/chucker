@@ -41,4 +41,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/launch_chucker_directly" />
+
+    <Button
+        android:onClick="crash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="crash" />
+    <Button
+       android:onClick="block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="block" />
+    <Button
+        android:onClick="leak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="leak" />
 </LinearLayout>

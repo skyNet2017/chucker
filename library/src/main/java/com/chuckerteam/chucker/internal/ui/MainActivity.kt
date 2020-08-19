@@ -35,11 +35,12 @@ internal class MainActivity :
                 object : TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
-                        if (position == HomePageAdapter.BLOCK) {
+                        currentPosition = position
+                        /*if (position == HomePageAdapter.BLOCK) {
                             Chucker.dismissTransactionsNotification(this@MainActivity)
                         } else {
                             Chucker.dismissErrorsNotification(this@MainActivity)
-                        }
+                        }*/
                     }
                 }
             )
@@ -74,5 +75,6 @@ internal class MainActivity :
 
     companion object {
         const val EXTRA_SCREEN = "EXTRA_SCREEN"
+        var currentPosition = 0
     }
 }

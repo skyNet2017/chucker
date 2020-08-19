@@ -9,6 +9,7 @@ import androidx.room.ColumnInfo
 internal data class RecordedThrowableTuple(
     @ColumnInfo(name = "id") var id: Long? = 0,
     @ColumnInfo(name = "tag") var tag: String?,
+    @ColumnInfo(name = "activity") var top_activity: String?,
     @ColumnInfo(name = "date") var date: Long?,
     @ColumnInfo(name = "clazz") var clazz: String?,
     @ColumnInfo(name = "message") var message: String?

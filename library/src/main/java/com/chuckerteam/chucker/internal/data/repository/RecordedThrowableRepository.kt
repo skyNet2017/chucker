@@ -15,9 +15,9 @@ internal interface RecordedThrowableRepository {
 
     suspend fun deleteOldThrowables(threshold: Long)
 
-    suspend fun deleteAllThrowables()
+    suspend fun deleteAllThrowables(tag: String)
 
-    fun getSortedThrowablesTuples(): LiveData<List<RecordedThrowableTuple>>
+    fun getSortedThrowablesTuples(tag: String): LiveData<List<RecordedThrowableTuple>>
 
     fun getRecordedThrowable(id: Long): LiveData<RecordedThrowable>
 }

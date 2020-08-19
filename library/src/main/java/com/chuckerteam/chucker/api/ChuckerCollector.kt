@@ -3,6 +3,7 @@ package com.chuckerteam.chucker.api
 import android.content.Context
 
 import com.chuckerteam.chucker.internal.data.entity.RecordedThrowable
+import com.chuckerteam.chucker.internal.data.entity.ThrowableType
 import com.chuckerteam.chucker.internal.data.repository.RepositoryProvider
 import com.chuckerteam.chucker.internal.support.NotificationHelper
 import kotlinx.coroutines.CoroutineScope
@@ -21,9 +22,9 @@ import kotlinx.coroutines.launch
  * by this collector. The default is one week.
  */
 class ChuckerCollector @JvmOverloads constructor(
-    context: Context,
-    var showNotification: Boolean = true,
-    retentionPeriod: RetentionManager.Period = RetentionManager.Period.ONE_WEEK
+        context: Context,
+        var showNotification: Boolean = true,
+        retentionPeriod: RetentionManager.Period = RetentionManager.Period.ONE_WEEK
 ) {
     private val retentionManager: RetentionManager = RetentionManager(context, retentionPeriod)
     private val notificationHelper: NotificationHelper = NotificationHelper(context)
@@ -34,11 +35,13 @@ class ChuckerCollector @JvmOverloads constructor(
 
     /**
      * Call this method when a throwable is triggered and you want to record it.
-     * @param tag A tag you choose
+     * @param tag A tag you choose 取值: ThrowableType.tag_xxx. 可以自定义,但不要加太多,多少个tag,就多少个tab
      * @param throwable The triggered [Throwable]
      */
     fun onError(tag: String, throwable: Throwable) {
         val recordedThrowable = RecordedThrowable(tag, throwable)
+        ThrowableType.addType(tag)
+        recordedThrowable.top_activity = Chucker.top?.get()?.javaClass?.simpleName
         CoroutineScope(Dispatchers.IO).launch {
             RepositoryProvider.throwable().saveThrowable(recordedThrowable)
         }
@@ -47,8 +50,6 @@ class ChuckerCollector @JvmOverloads constructor(
         }
         retentionManager.doMaintenance()
     }
-
-
 
 
 }

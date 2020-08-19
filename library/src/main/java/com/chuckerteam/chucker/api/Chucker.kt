@@ -1,11 +1,16 @@
 package com.chuckerteam.chucker.api
 
+import android.app.Activity
+import android.app.Application
+import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.annotation.IntDef
 import com.chuckerteam.chucker.internal.support.ChuckerCrashHandler
 import com.chuckerteam.chucker.internal.support.NotificationHelper
 import com.chuckerteam.chucker.internal.ui.MainActivity
+import java.lang.ref.WeakReference
 
 /**
  * Chucker methods and utilities to interact with the library.
@@ -33,6 +38,38 @@ object Chucker {
         return Intent(context, MainActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .putExtra(MainActivity.EXTRA_SCREEN, screen)
+    }
+
+   var top = WeakReference<Activity>(null)
+
+    @JvmStatic
+    fun init(app: Application){
+        app.registerActivityLifecycleCallbacks(object :ActivityLifecycleCallbacks{
+            override fun onActivityPaused(activity: Activity) {
+            }
+
+            override fun onActivityStarted(activity: Activity) {
+            }
+
+            override fun onActivityDestroyed(activity: Activity) {
+
+            }
+
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+            }
+
+            override fun onActivityStopped(activity: Activity) {
+            }
+
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                top = WeakReference(activity)
+            }
+
+            override fun onActivityResumed(activity: Activity) {
+                top = WeakReference(activity)
+            }
+
+        })
     }
 
     /**

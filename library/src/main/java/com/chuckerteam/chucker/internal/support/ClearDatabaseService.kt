@@ -2,7 +2,9 @@ package com.chuckerteam.chucker.internal.support
 
 import android.app.IntentService
 import android.content.Intent
+import com.chuckerteam.chucker.internal.data.entity.ThrowableType
 import com.chuckerteam.chucker.internal.data.repository.RepositoryProvider
+import com.chuckerteam.chucker.internal.ui.MainActivity
 import java.io.Serializable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +22,7 @@ internal class ClearDatabaseService : IntentService(CLEAN_DATABASE_SERVICE_NAME)
             is ClearAction.Error -> {
                 RepositoryProvider.initialize(applicationContext)
                 CoroutineScope(Dispatchers.IO).launch {
-                    RepositoryProvider.throwable().deleteAllThrowables()
+                    RepositoryProvider.throwable().deleteAllThrowables(ThrowableType.types.get(MainActivity.currentPosition))
                 }
                 NotificationHelper(this).dismissErrorsNotification()
             }

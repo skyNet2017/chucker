@@ -2,6 +2,7 @@ package com.chuckerteam.chucker.internal.ui.throwable
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,6 +23,7 @@ internal class ThrowableListFragment : Fragment(), ThrowableAdapter.ThrowableCli
     private lateinit var viewModel: MainViewModel
     private lateinit var errorsBinding: ChuckerFragmentThrowableListBinding
     private lateinit var errorsAdapter: ThrowableAdapter
+    var tag2: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,7 @@ internal class ThrowableListFragment : Fragment(), ThrowableAdapter.ThrowableCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.throwables.observe(
+        viewModel.getLiveData(tag2).observe(
             viewLifecycleOwner,
             Observer { throwables ->
                 errorsAdapter.setData(throwables)
@@ -77,9 +79,9 @@ internal class ThrowableListFragment : Fragment(), ThrowableAdapter.ThrowableCli
     private fun askForConfirmation() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.chucker_clear)
-            .setMessage(R.string.chucker_clear_throwable_confirmation)
+            .setMessage(getString(R.string.chucker_clear_throwable_confirmation)+"-"+tag2)
             .setPositiveButton(R.string.chucker_clear) { _, _ ->
-                viewModel.clearThrowables()
+                viewModel.clearThrowables(tag2+"")
             }
             .setNegativeButton(R.string.chucker_cancel, null)
             .show()
@@ -90,6 +92,10 @@ internal class ThrowableListFragment : Fragment(), ThrowableAdapter.ThrowableCli
     }
 
     companion object {
-        fun newInstance() = ThrowableListFragment()
+        fun newInstance(tag:String): ThrowableListFragment {
+            val f = ThrowableListFragment()
+            f.tag2 = tag
+            return f
+        }
     }
 }

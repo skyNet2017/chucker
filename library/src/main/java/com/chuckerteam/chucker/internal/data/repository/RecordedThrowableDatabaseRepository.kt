@@ -14,12 +14,12 @@ internal class RecordedThrowableDatabaseRepository(
         return database.throwableDao().getById(id).distinctUntilChanged()
     }
 
-    override suspend fun deleteAllThrowables() {
-        database.throwableDao().deleteAll()
+    override suspend fun deleteAllThrowables(tag:String) {
+        database.throwableDao().deleteAll(tag)
     }
 
-    override fun getSortedThrowablesTuples(): LiveData<List<RecordedThrowableTuple>> {
-        return database.throwableDao().getTuples()
+    override fun getSortedThrowablesTuples(tag:String): LiveData<List<RecordedThrowableTuple>> {
+        return database.throwableDao().getTuples(tag)
     }
 
     override suspend fun saveThrowable(throwable: RecordedThrowable) {

@@ -10,14 +10,14 @@ import com.chuckerteam.chucker.internal.data.entity.RecordedThrowableTuple
 @Dao
 internal interface RecordedThrowableDao {
 
-    @Query("SELECT id,tag,date,clazz,message FROM throwables ORDER BY date DESC")
-    fun getTuples(): LiveData<List<RecordedThrowableTuple>>
+    @Query("SELECT id,tag,activity,date,clazz,message FROM throwables WHERE tag = :tag ORDER BY date DESC")
+    fun getTuples(tag: String): LiveData<List<RecordedThrowableTuple>>
 
     @Insert
     suspend fun insert(throwable: RecordedThrowable): Long?
 
-    @Query("DELETE FROM throwables")
-    suspend fun deleteAll()
+    @Query("DELETE FROM throwables WHERE tag = :tag")
+    suspend fun deleteAll(tag: String)
 
     @Query("SELECT * FROM throwables WHERE id = :id")
     fun getById(id: Long): LiveData<RecordedThrowable>
