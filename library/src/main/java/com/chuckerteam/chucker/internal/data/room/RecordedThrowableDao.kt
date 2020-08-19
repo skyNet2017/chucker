@@ -13,6 +13,9 @@ internal interface RecordedThrowableDao {
     @Query("SELECT id,tag,activity,date,clazz,message FROM throwables WHERE tag = :tag ORDER BY date DESC")
     fun getTuples(tag: String): LiveData<List<RecordedThrowableTuple>>
 
+    @Query("SELECT id,tag,activity,date,clazz,message FROM throwables WHERE (clazz LIKE :text OR message LIKE :text OR content LIKE :text) ORDER BY date DESC")
+    fun searchTuples(text: String): LiveData<List<RecordedThrowableTuple>>
+
     @Insert
     suspend fun insert(throwable: RecordedThrowable): Long?
 

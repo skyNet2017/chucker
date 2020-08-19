@@ -21,6 +21,11 @@ internal class MainViewModel : ViewModel() {
                 .getSortedThrowablesTuples(tag)
     }
 
+    fun getSearchResults(text: String):LiveData<List<RecordedThrowableTuple>>{
+        return RepositoryProvider.throwable()
+                .getSearchResults(text)
+    }
+
     fun updateItemsFilter(searchQuery: String) {
         currentFilter.value = searchQuery
     }

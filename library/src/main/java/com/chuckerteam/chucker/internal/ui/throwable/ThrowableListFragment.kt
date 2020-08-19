@@ -1,5 +1,8 @@
 package com.chuckerteam.chucker.internal.ui.throwable
 
+import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.util.Log
@@ -71,9 +74,25 @@ internal class ThrowableListFragment : Fragment(), ThrowableAdapter.ThrowableCli
         return if (item.itemId == R.id.clear) {
             askForConfirmation()
             true
+        } else if (item.itemId == R.id.search) {
+           doSearch(tag2)
+            true
         } else {
             super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun doSearch(tag2: String) {
+        val holder = SearchViewHolder(requireContext(), null)
+       var dialog =  AlertDialog.Builder(requireContext())
+               .setView(holder.rootView)
+                .show()
+        dialog.setOnShowListener(DialogInterface.OnShowListener {
+            dialog.window?.attributes?.width   = context?.resources?.displayMetrics?.widthPixels
+        })
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
     }
 
     private fun askForConfirmation() {

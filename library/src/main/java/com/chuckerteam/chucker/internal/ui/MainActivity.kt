@@ -29,6 +29,7 @@ internal class MainActivity :
             setContentView(root)
             setSupportActionBar(toolbar)
             toolbar.subtitle = applicationName
+
             viewPager.adapter = HomePageAdapter(this@MainActivity, supportFragmentManager)
             tabLayout.setupWithViewPager(viewPager)
             viewPager.addOnPageChangeListener(

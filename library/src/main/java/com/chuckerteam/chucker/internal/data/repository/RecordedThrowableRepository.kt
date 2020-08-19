@@ -20,4 +20,6 @@ internal interface RecordedThrowableRepository {
     fun getSortedThrowablesTuples(tag: String): LiveData<List<RecordedThrowableTuple>>
 
     fun getRecordedThrowable(id: Long): LiveData<RecordedThrowable>
+
+     fun getSearchResults(tag:String): LiveData<List<RecordedThrowableTuple>>
 }

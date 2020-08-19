@@ -1,5 +1,6 @@
 package com.chuckerteam.chucker.internal.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.chuckerteam.chucker.internal.data.entity.RecordedThrowable
 import com.chuckerteam.chucker.internal.data.entity.RecordedThrowableTuple
@@ -20,6 +21,10 @@ internal class RecordedThrowableDatabaseRepository(
 
     override fun getSortedThrowablesTuples(tag:String): LiveData<List<RecordedThrowableTuple>> {
         return database.throwableDao().getTuples(tag)
+    }
+
+    override fun getSearchResults(tag:String): LiveData<List<RecordedThrowableTuple>> {
+        return database.throwableDao().searchTuples("%"+tag+"%")
     }
 
     override suspend fun saveThrowable(throwable: RecordedThrowable) {
