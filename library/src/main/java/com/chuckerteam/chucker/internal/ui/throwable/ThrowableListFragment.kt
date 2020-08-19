@@ -6,12 +6,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -89,8 +85,11 @@ internal class ThrowableListFragment : Fragment(), ThrowableAdapter.ThrowableCli
                 .show()
         dialog.setOnShowListener(DialogInterface.OnShowListener {
             dialog.window?.attributes?.width   = context?.resources?.displayMetrics?.widthPixels
+            dialog.window?.setGravity(Gravity.TOP)
         })
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setGravity(Gravity.TOP)
 
 
     }
