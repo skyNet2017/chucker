@@ -85,9 +85,6 @@ class HttpBinClient(
         }
     }
 
-    internal fun initializeCrashHandler() {
-        Chucker.registerDefaultCrashHandler(collector)
-    }
 
     internal fun recordException() {
         collector.onError(ThrowableType.TAG_normal, RuntimeException("User triggered the button"))

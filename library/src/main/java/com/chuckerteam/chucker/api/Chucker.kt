@@ -49,8 +49,8 @@ object Chucker {
      * @param collector the ChuckerCollector
      */
     @JvmStatic
-    fun registerDefaultCrashHandler(collector: ChuckerCollector) {
-        Thread.setDefaultUncaughtExceptionHandler(ChuckerCrashHandler(collector))
+    fun registerDefaultCrashHandler() {
+        Thread.setDefaultUncaughtExceptionHandler(ChuckerCrashHandler())
     }
 
     /**

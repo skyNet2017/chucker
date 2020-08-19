@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener { launchChuckerDirectly() }
         }
 
-        client.initializeCrashHandler()
+
     }
 
     private fun launchChuckerDirectly() {
@@ -35,7 +35,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun crash(view: View) {
-        ExceptionCollector.logThrowable(ThrowableType.TAG_CRASH,RuntimeException("crash......"))
+       // ExceptionCollector.logThrowable(ThrowableType.TAG_CRASH,RuntimeException("crash......"))
+        var i = 4/0;
     }
     fun block(view: View) {
         ExceptionCollector.logThrowable(ThrowableType.TAG_block,RuntimeException("block......"))
