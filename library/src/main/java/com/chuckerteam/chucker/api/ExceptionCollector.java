@@ -56,7 +56,7 @@ public class ExceptionCollector {
 
             }
         });
-        Chucker.registerDefaultCrashHandler();
+        //Chucker.registerDefaultCrashHandler();
     }
 
     public static void logThrowable(String tag,Throwable throwable){
