@@ -12,7 +12,7 @@ internal abstract class ChuckerDatabase : RoomDatabase() {
     abstract fun throwableDao(): RecordedThrowableDao
 
     companion object {
-        private const val DB_NAME = "chuckerexception.db"
+        private const val DB_NAME = "chucker.db"
 
         fun create(context: Context): ChuckerDatabase {
             // We eventually delete the old DB if a previous version of Chuck/Chucker was used.
