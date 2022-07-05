@@ -15,6 +15,7 @@ android {
         applicationId "com.chuckerteam.chucker.sample"
         versionName VERSION_NAME
         versionCode VERSION_CODE.toInteger()
+        multiDexEnabled true
     }
 
     buildFeatures {
@@ -75,8 +76,12 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-
+    implementation 'com.github.skyNet2017.Luban:dataForPhotoSelet:3.1.9'
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion"
 }
 
 apply from: rootProject.file('gradle/kotlin-static-analysis.gradle')
+
+configurations {
+    all*.exclude group: 'com.android.support', module: 'support-compat'
+}

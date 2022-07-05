@@ -4,6 +4,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
+import com.hss01248.network.body.meta.interceptor.MyAppHelperInterceptor
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -36,6 +37,7 @@ fun createOkHttpClient(
         // Add a ChuckerInterceptor instance to your OkHttp client as an application or a network interceptor.
         // Learn more about interceptor types here – https://square.github.io/okhttp/interceptors.
         // "activeForType" is needed only in this sample to control it from the UI.
+        .addInterceptor(MyAppHelperInterceptor())
         .addInterceptor(chuckerInterceptor.activeForType(InterceptorType.APPLICATION, interceptorTypeProvider))
         .addNetworkInterceptor(chuckerInterceptor.activeForType(InterceptorType.NETWORK, interceptorTypeProvider))
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

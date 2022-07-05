@@ -90,6 +90,8 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$androidXCoreVersion"
     testImplementation "com.google.truth:truth:$truthVersion"
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    api 'com.github.hss01248.flipperUtil:network-body-meta-interceptor:1.5.04-dev'
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

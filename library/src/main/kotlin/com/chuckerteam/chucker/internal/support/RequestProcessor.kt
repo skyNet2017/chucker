@@ -1,10 +1,12 @@
 package com.chuckerteam.chucker.internal.support
 
 import android.content.Context
+import android.text.TextUtils
 import com.chuckerteam.chucker.R
 import com.chuckerteam.chucker.api.BodyDecoder
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
+import com.hss01248.network.body.meta.interceptor.MyAppHelperInterceptor
 import okhttp3.Request
 import okio.Buffer
 import okio.ByteString
@@ -44,6 +46,13 @@ internal class RequestProcessor(
         }
         if (body.isDuplex()) {
             Logger.info("Skipping duplex request body")
+            return
+        }
+        val content = MyAppHelperInterceptor.getRequestBodyMetaStr(request)
+        if(!TextUtils.isEmpty(content)){
+            Logger.info("save request body map")
+            transaction.requestBody = content
+            transaction.isRequestBodyEncoded = false
             return
         }
 

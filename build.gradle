@@ -75,6 +75,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
     }
 
     tasks.withType(Test) {
