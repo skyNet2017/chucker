@@ -1,7 +1,13 @@
 buildscript {
+    apply from: 'https://raw.githubusercontent.com/hss01248/flipperUtil/dev/deps/uploadAllTask.gradle'
+    ext{
+        groupId='com.github.skyNet2017.chucker'
+        versionCode = '5.0.0'
+        isPublisToLocal=true
+    }
     ext {
         kotlinVersion = '1.6.10'
-        androidGradleVersion = '7.2.1'
+        androidGradleVersion = '4.1.0'
         coroutineVersion = '1.6.3'
 
         // Google libraries
