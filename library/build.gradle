@@ -6,11 +6,14 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
         kotlinOptions.freeCompilerArgs += [
             '-module-name', "com.github.ChuckerTeam.Chucker.library",
             "-Xexplicit-api=strict"
         ]
     }
+
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion

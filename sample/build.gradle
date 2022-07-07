@@ -11,6 +11,10 @@ android {
         versionName VERSION_NAME
         versionCode VERSION_CODE.toInteger()
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 
     buildFeatures {
         viewBinding = true
