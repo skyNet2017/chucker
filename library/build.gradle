@@ -79,5 +79,5 @@ dependencies {
     api 'com.github.hss01248.flipperUtil:network-body-meta-interceptor:1.5.04-dev'
 }
 
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+//apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
 apply from: rootProject.file('gradle/kotlin-static-analysis.gradle')
