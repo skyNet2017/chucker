@@ -66,7 +66,7 @@ android {
 dependencies {
     debugImplementation project(':library')
     releaseImplementation project(':library-no-op')
-
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     implementation "com.google.android.material:material:$materialComponentsVersion"

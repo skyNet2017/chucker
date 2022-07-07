@@ -20,7 +20,7 @@ public class BaseApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        //MultiDex.install(base);
-        //BodyUtil2.attachBaseContext(base);
+        MultiDex.install(base);
+        BodyUtil2.attachBaseContext(base);
     }
 }
