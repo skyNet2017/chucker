@@ -44,21 +44,40 @@ internal class NotificationHelper(val context: Context) {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     private val transactionsScreenIntent by lazy {
-        PendingIntent.getActivity(
-            context,
-            TRANSACTION_NOTIFICATION_ID,
-            Chucker.getLaunchIntent(context),
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            PendingIntent.getActivity(
+                    context,
+                    TRANSACTION_NOTIFICATION_ID,
+                    Chucker.getLaunchIntent(context),
+                    PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT )
+        }else{
+            PendingIntent.getActivity(
+                    context,
+                    TRANSACTION_NOTIFICATION_ID,
+                    Chucker.getLaunchIntent(context),
+                    PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+
     }
 
     private val errorsScreenIntent by lazy {
-        PendingIntent.getActivity(
-            context,
-            ERROR_NOTIFICATION_ID,
-            Chucker.getLaunchIntent(context, Chucker.SCREEN_ERROR),
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            PendingIntent.getActivity(
+                    context,
+                    ERROR_NOTIFICATION_ID,
+                    Chucker.getLaunchIntent(context, Chucker.SCREEN_ERROR),
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            )
+        }else{
+            PendingIntent.getActivity(
+                    context,
+                    ERROR_NOTIFICATION_ID,
+                    Chucker.getLaunchIntent(context, Chucker.SCREEN_ERROR),
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        }
+
     }
 
     init {
@@ -151,13 +170,22 @@ internal class NotificationHelper(val context: Context) {
             val deleteIntent = Intent(context, ClearDatabaseService::class.java).apply {
                 putExtra(ClearDatabaseService.EXTRA_ITEM_TO_CLEAR, clearAction)
             }
-            val intent = PendingIntent.getService(
-                context,
-                INTENT_REQUEST_CODE,
-                deleteIntent,
-                PendingIntent.FLAG_ONE_SHOT
-            )
-            return NotificationCompat.Action(R.drawable.chucker_ic_delete_white, clearTitle, intent)
+            val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.getService(
+                    context,
+                    INTENT_REQUEST_CODE,
+                    deleteIntent,
+                    PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_MUTABLE
+                )
+            } else {
+                PendingIntent.getService(
+                        context,
+                        INTENT_REQUEST_CODE,
+                        deleteIntent,
+                        PendingIntent.FLAG_ONE_SHOT
+                )
+            }
+        return NotificationCompat.Action(R.drawable.chucker_ic_delete_white, clearTitle, intent)
         }
 
     fun dismissTransactionsNotification() {

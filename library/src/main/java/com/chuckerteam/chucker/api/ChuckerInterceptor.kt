@@ -1,16 +1,20 @@
 package com.chuckerteam.chucker.api
 
 import android.content.Context
+import android.text.TextUtils
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
+import com.chuckerteam.chucker.internal.support.*
 import com.chuckerteam.chucker.internal.support.CacheDirectoryProvider
 import com.chuckerteam.chucker.internal.support.DepletingSource
 import com.chuckerteam.chucker.internal.support.FileFactory
 import com.chuckerteam.chucker.internal.support.IOUtils
+import com.chuckerteam.chucker.internal.support.Logger
 import com.chuckerteam.chucker.internal.support.ReportingSink
 import com.chuckerteam.chucker.internal.support.TeeSource
 import com.chuckerteam.chucker.internal.support.contentType
 import com.chuckerteam.chucker.internal.support.hasBody
 import com.chuckerteam.chucker.internal.support.isGzipped
+import com.hss01248.network.body.meta.interceptor.MyAppHelperInterceptor
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -139,6 +143,14 @@ public class ChuckerInterceptor internal constructor(
             method = request.method()
             requestContentType = requestBody?.contentType()?.toString()
             requestPayloadSize = requestBody?.contentLength() ?: 0L
+        }
+
+        val content = MyAppHelperInterceptor.getRequestBodyMetaStr(request)
+        if(!TextUtils.isEmpty(content)){
+            Logger.info("save request body map")
+            transaction.requestBody = content
+            //transaction.isRequestBodyPlainText = false
+            return
         }
 
         if (requestBody != null && encodingIsSupported) {

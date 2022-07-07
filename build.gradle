@@ -1,4 +1,11 @@
 buildscript {
+
+    apply from: 'https://raw.githubusercontent.com/hss01248/flipperUtil/dev/deps/uploadAllTask.gradle'
+    ext{
+        groupId='com.github.skyNet2017.chucker'
+        versionCode = '3.4.0.00'
+        isPublisToLocal=true
+    }
     ext {
         kotlinVersion = '1.4.10'
         androidGradleVersion = '4.1.0'
@@ -59,6 +66,8 @@ allprojects {
     repositories {
         jcenter()
         google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
     }
 
     tasks.withType(Test) {
@@ -81,6 +90,6 @@ task clean(type: Delete) {
 
 ext {
     minSdkVersion = 16
-    targetSdkVersion = 30
-    compileSdkVersion = 30
+    targetSdkVersion = 32
+    compileSdkVersion = 32
 }
