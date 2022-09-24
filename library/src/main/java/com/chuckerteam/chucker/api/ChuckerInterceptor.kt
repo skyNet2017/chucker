@@ -221,17 +221,35 @@ public class ChuckerInterceptor internal constructor(
         val contentType = responseBody.contentType()
         val contentLength = responseBody.contentLength()
 
-        val sideStream = ReportingSink(
-            createTempTransactionFile(),
-            ChuckerTransactionReportingSinkCallback(response, transaction),
-            maxContentLength
-        )
-        var upstream: Source = TeeSource(responseBody.source(), sideStream)
-        if (alwaysReadResponseBody) upstream = DepletingSource(upstream)
+        //只记录text/*, json等,不记录图片,视频等二进制文件
+        var shouldReadBody = false;
+        if(contentType != null){
+            var type = contentType.type();
+            if(!TextUtils.isEmpty(type)){
+                if(type.contains("text/") || type.contains("json") || type.contains("xml")){
+                    shouldReadBody = true;
+                }
+            }
+        }
+        if(shouldReadBody){
+            val sideStream = ReportingSink(
+                createTempTransactionFile(),
+                ChuckerTransactionReportingSinkCallback(response, transaction),
+                maxContentLength
+            )
+            var upstream: Source = TeeSource(responseBody.source(), sideStream)
+            if (alwaysReadResponseBody) upstream = DepletingSource(upstream)
 
-        return response.newBuilder()
-            .body(ResponseBody.create(contentType, contentLength, Okio.buffer(upstream)))
-            .build()
+            return response.newBuilder()
+                .body(ResponseBody.create(contentType, contentLength, Okio.buffer(upstream)))
+                .build()
+        }else{
+
+            return  response;
+        }
+
+
+
     }
 
     private fun createTempTransactionFile(): File? {
