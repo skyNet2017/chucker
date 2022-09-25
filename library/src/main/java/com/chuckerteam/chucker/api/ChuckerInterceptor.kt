@@ -218,20 +218,28 @@ public class ChuckerInterceptor internal constructor(
             return response
         }
 
+        var typeInHeader = response.header("Content-Type");
         val contentType = responseBody.contentType()
         val contentLength = responseBody.contentLength()
+        if(TextUtils.isEmpty(typeInHeader)){
+            if(contentType != null){
+                typeInHeader = contentType.type();
+            }
+        }
 
         //只记录text/*, json等,不记录图片,视频等二进制文件
         var shouldReadBody = false;
-        if(contentType != null){
-            var type = contentType.type();
-            if(!TextUtils.isEmpty(type)){
-                if(type.contains("text/") || type.contains("json") || type.contains("xml")){
-                    shouldReadBody = true;
-                }
+
+        if(!TextUtils.isEmpty(typeInHeader)){
+            if(typeInHeader!!.contains("text")
+                    || typeInHeader.contains("json")
+                    || typeInHeader.contains("xml")){
+                shouldReadBody = true
             }
         }
+
         if(shouldReadBody){
+            //todo 格式化
             val sideStream = ReportingSink(
                 createTempTransactionFile(),
                 ChuckerTransactionReportingSinkCallback(response, transaction),
@@ -244,7 +252,8 @@ public class ChuckerInterceptor internal constructor(
                 .body(ResponseBody.create(contentType, contentLength, Okio.buffer(upstream)))
                 .build()
         }else{
-
+            transaction.responseBody = "not text/json/xml, do not record"
+            collector.onResponseReceived(transaction)
             return  response;
         }
 
